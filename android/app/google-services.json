@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "247040840814",
+    "project_id": "multichat-c9773",
+    "storage_bucket": "multichat-c9773.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247040840814:android:1a3636341326858019427f",
+        "android_client_info": {
+          "package_name": "club.multichat.multichat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "247040840814-cqrt55i6fkjgm4rkurataiodb2ir2tfq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "club.multichat.multichat",
+            "certificate_hash": "a31c18502bf3646cf10079a6f6ef9b1d54133f3a"
+          }
+        },
+        {
+          "client_id": "247040840814-7nfjkih7o536v10on0ppt6muhhbfht8v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZEZA7H3ZE6sF2ky9tJV10Jwsl6E27xsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "247040840814-7nfjkih7o536v10on0ppt6muhhbfht8v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
