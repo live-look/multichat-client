@@ -1,55 +1,61 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
-import '../sources/users_api_source.dart';
+import 'package:multichat/features/core/data/sources/users_local_source.dart';
+import '../sources/users_remote_source.dart';
 import '../../entities/current_user.dart';
-import '../../entities/user_photo.dart';
 
 import '../../../../src/generated/users.pb.dart' as pb;
 
 class AuthRepository {
   final FirebaseAuth _firebaseAuthInstance;
-  final UsersApiSource _usersApiSource;
+  final UsersRemoteSource _usersRemoteSource;
+  final UsersLocalSource _usersLocalSource;
 
   AuthRepository({
     FirebaseAuth? firebaseAuthInstance,
-    UsersApiSource? usersApiSource,
+    UsersRemoteSource? usersRemoteSource,
+    UsersLocalSource? usersLocalSource,
   })  : _firebaseAuthInstance = firebaseAuthInstance ?? GetIt.I<FirebaseAuth>(),
-        _usersApiSource = usersApiSource ?? GetIt.I<UsersApiSource>();
+        _usersRemoteSource = usersRemoteSource ?? GetIt.I<UsersRemoteSource>(),
+        _usersLocalSource = usersLocalSource ?? GetIt.I<UsersLocalSource>();
 
-  Future<CurrentUser> signIn() async {
-    User? fbUser = _firebaseAuthInstance.currentUser;
+  Future<CurrentUser> signUp(CurrentUser userInfo) async {
+    final userCredential = await _firebaseAuthInstance.signInAnonymously();
+    final fbUser = userCredential.user;
     if (fbUser == null) {
-      UserCredential userCredential =
-          await _firebaseAuthInstance.signInAnonymously();
-      fbUser = userCredential.user;
-
-      if (fbUser != null) {
-        pb.User pbUser = pb.User(id: fbUser.uid);
-        final client = _usersApiSource.client;
-
-        pbUser = await client.create(pbUser);
-      }
+      throw Exception("signInAnonymously failed");
     }
 
-    return _mapFirebaseUserToUser(fbUser!);
+    pb.User pbUser = pb.User(
+      id: fbUser.uid,
+      name: userInfo.name,
+      gender: userInfo.gender,
+      birthday: userInfo.age.toString(),
+    );
+    final client = _usersRemoteSource.client;
+
+    await client.create(pbUser);
+
+    final currentUser = userInfo.copyWith(id: fbUser.uid);
+
+    await _usersLocalSource.initSource();
+    _usersLocalSource.putCurrentUser(currentUser);
+
+    return currentUser;
+  }
+
+  Future<CurrentUser?> signIn() async {
+    User? fbUser = _firebaseAuthInstance.currentUser;
+    if (fbUser == null) {
+      return null;
+    }
+
+    await _usersLocalSource.initSource();
+    return _usersLocalSource.getCurrentUser(fbUser.uid);
   }
 
   Future<void> signOut() async {
     await _firebaseAuthInstance.signOut();
-  }
-
-  CurrentUser _mapFirebaseUserToUser(User firebaseUser) {
-    return CurrentUser(
-      id: firebaseUser.uid,
-      name: firebaseUser.displayName ?? 'Anonymous',
-      email: firebaseUser.email ?? '',
-      phone: firebaseUser.phoneNumber ?? '',
-      photoURL: firebaseUser.photoURL ?? '',
-      photos: <UserPhoto>[],
-      lastSeen: CurrentUser.offlineDateTime,
-      gender: CurrentUser.othersGender,
-      birthday: CurrentUser.defaultDateTime,
-    );
   }
 }

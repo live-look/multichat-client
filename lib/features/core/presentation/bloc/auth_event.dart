@@ -12,10 +12,10 @@ class AuthStarted extends AuthEvent {
   const AuthStarted() : super();
 }
 
-class AuthFinished extends AuthEvent {
+class AuthFormFilled extends AuthEvent {
   final CurrentUser user;
 
-  const AuthFinished({required this.user}) : super();
+  const AuthFormFilled({required this.user}) : super();
 
   @override
   List<Object> get props => [user];

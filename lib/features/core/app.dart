@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'presentation/router/app_router_delegate.dart';
 import 'presentation/bloc/auth_bloc.dart';
 
 // import '../../router/app_router_delegate.dart';
@@ -21,10 +22,8 @@ class App extends StatelessWidget {
             canvasColor: Colors.white,
             primarySwatch: Colors.deepPurple,
           ),
-          child: Scaffold(
-            body: Center(
-              child: const Text("Hello, world!"),
-            ),
+          child: Router(
+            routerDelegate: AppRouterDelegate(),
           ),
         ),
       ),

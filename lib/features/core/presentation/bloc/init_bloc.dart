@@ -5,7 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-//import 'package:lolive/features/core/data/models/device_info.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import '../../entities/current_user.dart';
 
 import 'init_event.dart';
 import 'init_state.dart';
@@ -25,6 +26,7 @@ class InitBloc extends Bloc<InitEvent, InitState> {
   Stream<InitState> mapEventToState(InitEvent event) async* {
     if (event is InitStarted) {
       await _initializeCrashlytics();
+      await _initializeHive();
       // await _loadDeviceInfo();
 
       // TODO: Handle foreground messages (only for Android)
@@ -52,6 +54,11 @@ class InitBloc extends Bloc<InitEvent, InitState> {
 
   Future<void> _loadDeviceInfo() async {
     //await _deviceInfo.readDeviceInfo();
+  }
+
+  Future<void> _initializeHive() async {
+    await Hive.initFlutter();
+    Hive.registerAdapter(CurrentUserAdapter());
   }
 
   @override

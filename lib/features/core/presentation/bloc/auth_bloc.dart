@@ -11,7 +11,6 @@ import 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
   final InitBloc _initBloc;
-  // StreamSubscription<User> _authenticationStatusSubscription;
   late final StreamSubscription<InitState> _initSubcription;
 
   AuthBloc({
@@ -37,41 +36,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         yield const AuthInProgress();
 
         final user = await _authRepository.signIn();
+        if (user != null) {
+          yield AuthSuccess(user: user);
+          break;
+        } else {
+          yield const AuthFailure();
+        }
 
+        break;
+      case AuthFormFilled:
+        yield const AuthInProgress();
+        final user =
+            await _authRepository.signUp((event as AuthFormFilled).user);
         yield AuthSuccess(user: user);
         break;
       default:
-        throw 'Unexected AuthEvent: $event';
+        throw 'Unexpected AuthEvent: $event';
     }
   }
-
-  @override
-  Future<void> close() {
-    // _authenticationStatusSubscription.cancel();
-    return super.close();
-  }
-
-  // _subscribeOnAuthStateChanges() {
-  //   _authenticationStatusSubscription = FirebaseAuth.instance
-  //       .authStateChanges()
-  //       .distinct()
-  //       .listen((User user) async {
-  //     if (user != null) {
-  //       final currentUser = await _authRepository.signIn(user);
-  //       final photos = await _userPhotoRepository.getAll(currentUser.id);
-
-  //       add(
-  //         AuthEvent.login(
-  //           photos.isNotEmpty
-  //               ? currentUser.copyWith(photos: photos)
-  //               : currentUser,
-  //         ),
-  //       );
-  //     } else {
-  //       add(AuthEvent.logout());
-  //     }
-  //   });
-  // }
 
   @override
   void onTransition(Transition<AuthEvent, AuthState> transition) {
