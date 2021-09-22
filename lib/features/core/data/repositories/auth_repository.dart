@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:multichat/features/core/data/sources/users_local_source.dart';
 import '../sources/users_remote_source.dart';
-import '../../entities/current_user.dart';
+import '../../entities/user.dart' as project;
 
 import '../../../../src/generated/users.pb.dart' as pb;
 
@@ -20,7 +20,7 @@ class AuthRepository {
         _usersRemoteSource = usersRemoteSource ?? GetIt.I<UsersRemoteSource>(),
         _usersLocalSource = usersLocalSource ?? GetIt.I<UsersLocalSource>();
 
-  Future<CurrentUser> signUp(CurrentUser userInfo) async {
+  Future<project.User> signUp(project.User userInfo) async {
     final userCredential = await _firebaseAuthInstance.signInAnonymously();
     final fbUser = userCredential.user;
     if (fbUser == null) {
@@ -45,7 +45,7 @@ class AuthRepository {
     return currentUser;
   }
 
-  Future<CurrentUser?> signIn() async {
+  Future<project.User?> signIn() async {
     User? fbUser = _firebaseAuthInstance.currentUser;
     if (fbUser == null) {
       return null;

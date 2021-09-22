@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../entities/current_user.dart';
+import '../../entities/user.dart';
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -17,7 +17,7 @@ class AuthInProgress extends AuthState {
 }
 
 class AuthSuccess extends AuthState {
-  final CurrentUser user;
+  final User user;
 
   const AuthSuccess({required this.user}) : super();
 

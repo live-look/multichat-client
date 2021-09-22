@@ -2,14 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'user_photo.dart';
 
-part 'current_user.g.dart';
+part 'user.g.dart';
 
-@HiveType(typeId : 1)
-class CurrentUser extends Equatable {
+@HiveType(typeId: 1)
+class User extends Equatable {
   static const String maleGender = 'Male';
   static const String femaleGender = 'Female';
   static const String othersGender = 'Others';
-  static final DateTime offlineDateTime = DateTime(1970);
   static final Duration maxOnlineDiff = Duration(minutes: 15);
 
   @HiveField(0)
@@ -23,11 +22,11 @@ class CurrentUser extends Equatable {
   @HiveField(4)
   final int age;
   @HiveField(5)
-  final DateTime lastSeen;
+  final DateTime? lastSeen;
   @HiveField(6)
   final List<UserPhoto> photos;
 
-  const CurrentUser({
+  const User({
     required this.id,
     required this.name,
     required this.gender,
@@ -37,17 +36,17 @@ class CurrentUser extends Equatable {
     required this.photos,
   });
 
-  static final empty = CurrentUser(
-    id: '',
-    name: '',
-    gender: othersGender,
-    photoURL: '',
-    age: 30,
-    lastSeen: offlineDateTime,
-    photos: <UserPhoto>[],
-  );
+  factory User.empty() => const User(
+        id: '',
+        name: '',
+        gender: maleGender,
+        photoURL: '',
+        age: 18,
+        lastSeen: null,
+        photos: <UserPhoto>[],
+      );
 
-  CurrentUser copyWith({
+  User copyWith({
     String? id,
     String? name,
     String? gender,
@@ -56,7 +55,7 @@ class CurrentUser extends Equatable {
     DateTime? lastSeen,
     List<UserPhoto>? photos,
   }) {
-    return CurrentUser(
+    return User(
       id: id ?? this.id,
       name: name ?? this.name,
       gender: gender ?? this.gender,
@@ -67,14 +66,14 @@ class CurrentUser extends Equatable {
     );
   }
 
-  factory CurrentUser.fromMap(Map<String, dynamic> map) {
-    return CurrentUser(
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
       id: map['id'],
       name: map['name'],
       gender: map['gender'],
       photoURL: map['photo_url'],
       age: map['age'],
-      lastSeen: map['last_seen']?.toDate() ?? offlineDateTime,
+      lastSeen: map['last_seen']?.toDate(),
       photos: <UserPhoto>[],
     );
   }
@@ -89,6 +88,6 @@ class CurrentUser extends Equatable {
       };
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [id, name, gender, photoURL, age, lastSeen, photos];
 }

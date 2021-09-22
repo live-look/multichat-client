@@ -1,15 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../widgets/splash.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../presentation/bloc/auth_bloc.dart';
+import '../../presentation/widgets/auth.dart';
 
-class InitPage extends Page {
-  const InitPage() : super(key: const ValueKey('InitPage'));
+class InitPage extends StatelessWidget {
+  const InitPage({Key? key}) : super(key: key);
 
   @override
-  Route createRoute(BuildContext context) {
-    return MaterialPageRoute(
-      settings: this,
-      builder: (_) => const Splash(),
+  Widget build(BuildContext context) {
+    return BlocProvider<AuthBloc>(
+      lazy: false,
+      create: (_) => AuthBloc(),
+      child: const Auth(),
     );
   }
 }

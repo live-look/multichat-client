@@ -1,17 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends Page {
-  const HomePage() : super(key: const ValueKey('HomePage'));
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  Route createRoute(BuildContext context) {
-    return MaterialPageRoute(
-      settings: this,
-      builder: (_) => Scaffold(
-        body: Center(
-          child: const Text('Home page'),
-        ),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: const Text('Home page'),
       ),
     );
   }

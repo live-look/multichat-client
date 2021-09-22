@@ -1,19 +1,19 @@
 import 'package:hive/hive.dart';
-import '../../entities/current_user.dart';
+import '../../entities/user.dart';
 
 class UsersLocalSource {
   static const String _boxName = "users";
 
-  Box<CurrentUser>? _currentUserBox;
+  Box<User>? _currentUserBox;
   Future<void> initSource() async {
-    _currentUserBox ??= await Hive.openBox<CurrentUser>(_boxName);
+    _currentUserBox ??= await Hive.openBox<User>(_boxName);
   }
 
-  void putCurrentUser(CurrentUser user) {
+  void putCurrentUser(User user) {
     _currentUserBox?.put(user.id, user);
   }
 
-  CurrentUser? getCurrentUser(String id) {
+  User? getCurrentUser(String id) {
     _currentUserBox?.get(id);
   }
 }

@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'presentation/router/app_router_delegate.dart';
-import 'presentation/bloc/auth_bloc.dart';
+import 'app_router.gr.dart';
 
-// import '../../router/app_router_delegate.dart';
-
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
 
   @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  final AppRouter _appRouter;
+
+  _AppState()
+      : _appRouter = AppRouter(),
+        super();
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      lazy: false,
-      create: (_) => AuthBloc(),
-      child: MaterialApp(
+    return Theme(
+      data: ThemeData(
+        canvasColor: Colors.white,
+        primarySwatch: Colors.deepPurple,
+      ),
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Multichat',
-        home: Theme(
-          data: ThemeData(
-            canvasColor: Colors.white,
-            primarySwatch: Colors.deepPurple,
-          ),
-          child: Router(
-            routerDelegate: AppRouterDelegate(),
-          ),
-        ),
+        routerDelegate: _appRouter.delegate(),
+        routeInformationParser: _appRouter.defaultRouteParser(),
       ),
     );
   }

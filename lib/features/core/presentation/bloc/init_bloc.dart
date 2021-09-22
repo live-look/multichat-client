@@ -6,7 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../entities/current_user.dart';
+import '../../entities/user.dart';
 
 import 'init_event.dart';
 import 'init_state.dart';
@@ -16,7 +16,7 @@ class InitBloc extends Bloc<InitEvent, InitState> {
   final FirebaseCrashlytics _crashlytics;
 
   InitBloc({
-   // DeviceInfo? deviceInfo,
+    // DeviceInfo? deviceInfo,
     FirebaseCrashlytics? crashlytics,
   })  : //_deviceInfo = deviceInfo ?? GetIt.I<DeviceInfo>(),
         _crashlytics = crashlytics ?? FirebaseCrashlytics.instance,
@@ -58,7 +58,7 @@ class InitBloc extends Bloc<InitEvent, InitState> {
 
   Future<void> _initializeHive() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(CurrentUserAdapter());
+    Hive.registerAdapter(UserAdapter());
   }
 
   @override

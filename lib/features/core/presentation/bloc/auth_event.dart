@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../entities/current_user.dart';
+import '../../entities/user.dart';
 
 abstract class AuthEvent extends Equatable {
   const AuthEvent();
@@ -13,7 +13,7 @@ class AuthStarted extends AuthEvent {
 }
 
 class AuthFormFilled extends AuthEvent {
-  final CurrentUser user;
+  final User user;
 
   const AuthFormFilled({required this.user}) : super();
 
