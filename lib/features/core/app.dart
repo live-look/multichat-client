@@ -18,16 +18,14 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: 'Multichat',
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
+      theme: ThemeData(
         canvasColor: Colors.white,
         primarySwatch: Colors.deepPurple,
-      ),
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: 'Multichat',
-        routerDelegate: _appRouter.delegate(),
-        routeInformationParser: _appRouter.defaultRouteParser(),
       ),
     );
   }
