@@ -28,18 +28,20 @@ class AuthRepository {
     }
 
     pb.User pbUser = pb.User(
-      id: fbUser.uid,
+      uid: fbUser.uid,
       name: userInfo.name,
       gender: userInfo.gender,
-      birthday: userInfo.age.toString(),
+      age: userInfo.age,
     );
     final client = _usersRemoteSource.client;
 
-    await client.create(pbUser);
+    pbUser = await client.create(pbUser);
 
-    final currentUser = userInfo.copyWith(id: fbUser.uid);
+    final currentUser = userInfo.copyWith(
+      uid: fbUser.uid,
+      id: pbUser.id,
+    );
 
-    await _usersLocalSource.initSource();
     _usersLocalSource.putCurrentUser(currentUser);
 
     return currentUser;
@@ -51,7 +53,6 @@ class AuthRepository {
       return null;
     }
 
-    await _usersLocalSource.initSource();
     return _usersLocalSource.getCurrentUser(fbUser.uid);
   }
 

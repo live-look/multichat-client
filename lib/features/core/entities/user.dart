@@ -12,22 +12,25 @@ class User extends Equatable {
   static final Duration maxOnlineDiff = Duration(minutes: 15);
 
   @HiveField(0)
-  final String id;
+  final int id;
   @HiveField(1)
-  final String name;
+  final String uid;
   @HiveField(2)
-  final String gender;
+  final String name;
   @HiveField(3)
-  final String photoURL;
+  final String gender;
   @HiveField(4)
-  final int age;
+  final String photoURL;
   @HiveField(5)
-  final DateTime? lastSeen;
+  final int age;
   @HiveField(6)
+  final DateTime? lastSeen;
+  @HiveField(7)
   final List<UserPhoto> photos;
 
   const User({
     required this.id,
+    required this.uid,
     required this.name,
     required this.gender,
     required this.photoURL,
@@ -36,8 +39,9 @@ class User extends Equatable {
     required this.photos,
   });
 
-  factory User.empty() => const User(
-        id: '',
+  factory User.empty() => User(
+        id: 0,
+        uid: '',
         name: '',
         gender: maleGender,
         photoURL: '',
@@ -47,7 +51,8 @@ class User extends Equatable {
       );
 
   User copyWith({
-    String? id,
+    int? id,
+    String? uid,
     String? name,
     String? gender,
     String? photoURL,
@@ -57,6 +62,7 @@ class User extends Equatable {
   }) {
     return User(
       id: id ?? this.id,
+      uid: uid ?? this.uid,
       name: name ?? this.name,
       gender: gender ?? this.gender,
       photoURL: photoURL ?? this.photoURL,
@@ -68,7 +74,8 @@ class User extends Equatable {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'],
+      id: map['id'] as int,
+      uid: map['uid'],
       name: map['name'],
       gender: map['gender'],
       photoURL: map['photo_url'],
@@ -80,6 +87,7 @@ class User extends Equatable {
 
   Map<String, dynamic> toMap() => {
         'id': id,
+        'uid': uid,
         'name': name,
         'gender': gender,
         'photo_url': photoURL,
@@ -89,5 +97,5 @@ class User extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, name, gender, photoURL, age, lastSeen, photos];
+      [id, uid, name, gender, photoURL, age, lastSeen, photos];
 }

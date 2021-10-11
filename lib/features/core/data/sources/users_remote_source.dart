@@ -11,13 +11,13 @@ class UsersRemoteSource {
           port: 50053,
           options: const ChannelOptions(
             credentials: ChannelCredentials.insecure(),
-            connectionTimeout: Duration(seconds: 10),
+            connectionTimeout: const Duration(seconds: 10),
           ),
         );
 
   grpc.UsersClient get client => grpc.UsersClient(
         channel,
-        options: CallOptions(timeout: Duration(seconds: 10)),
+        options: CallOptions(timeout: const Duration(seconds: 10)),
         interceptors: [AuthInterceptor()],
       );
 }
