@@ -53,7 +53,7 @@ class AuthRepository {
       return null;
     }
 
-    return _usersLocalSource.getCurrentUser(fbUser.uid);
+    return _usersLocalSource.getCurrentUser();
   }
 
   Future<void> signOut() async {

@@ -1,9 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import '../../data/repositories/profile_repository.dart';
 import 'user_profile_event.dart';
 import 'user_profile_state.dart';
 
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
-  UserProfileBloc() : super(UserProfileInitial());
+  final ProfileRepository _profileRepository;
+
+  UserProfileBloc({ProfileRepository? profileRepository})
+      : _profileRepository = profileRepository ?? GetIt.I<ProfileRepository>(),
+        super(UserProfileInitial());
 
   @override
   Stream<UserProfileState> mapEventToState(event) async* {
@@ -29,14 +35,24 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
           ),
         );
         break;
+      case UserProfileLoadStarted:
+        yield UserProfileLoadInProgress();
+        final user = _profileRepository.getCurrentUserProfile();
+        if (user != null) {
+          yield UserProfileLoadSuccess(user: user);
+        } else {
+          yield UserProfileLoadFailed();
+        }
+
+        break;
+      case UserProfileUpdateStarted:
+        final user = (event as UserProfileUpdateStarted).user;
+        yield UserProfileUpdateInProgress(user: user);
+        await _profileRepository.updateCurrentUserProfile(user);
+        yield UserProfileEditComplete(user: user);
+        break;
       default:
         throw Exception('Unknown event');
     }
-  }
-
-  @override
-  void onTransition(Transition<UserProfileEvent, UserProfileState> transition) {
-    super.onTransition(transition);
-    print(transition);
   }
 }

@@ -45,7 +45,7 @@ class User extends Equatable {
         name: '',
         gender: maleGender,
         photoURL: '',
-        age: 18,
+        age: 19,
         lastSeen: null,
         photos: <UserPhoto>[],
       );

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../entities/user.dart';
 
 abstract class UserProfileEvent extends Equatable {
   const UserProfileEvent();
@@ -32,4 +33,18 @@ class UserProfileGenderChanged extends UserProfileEvent {
 
   @override
   List<Object> get props => [gender];
+}
+
+class UserProfileLoadStarted extends UserProfileEvent {
+  const UserProfileLoadStarted() : super();
+}
+
+
+class UserProfileUpdateStarted extends UserProfileEvent {
+  final User user;
+
+  UserProfileUpdateStarted({required this.user}) : super();
+
+  @override
+  List<Object> get props => [user];
 }

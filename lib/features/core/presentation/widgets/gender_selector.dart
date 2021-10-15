@@ -7,9 +7,12 @@ import 'gender_radio_button.dart';
 
 class GenderSelector extends StatefulWidget {
   final Function(String)? callback;
+  final String? _initialValue;
 
-  const GenderSelector({Key? key, Function(String)? onSelected})
+  const GenderSelector(
+      {Key? key, String? initialValue, Function(String)? onSelected})
       : callback = onSelected,
+        _initialValue = initialValue,// ?? User.maleGender,
         super(key: key);
 
   @override
@@ -17,18 +20,22 @@ class GenderSelector extends StatefulWidget {
 }
 
 class _GenderSelectorState extends State<GenderSelector> {
-  static final _genders = <Gender>[
-    Gender(
-      User.maleGender,
-      Image.asset('assets/images/man.png'),
-      true,
-    ),
-    Gender(
-      User.femaleGender,
-      Image.asset('assets/images/woman.png'),
-      false,
-    ),
-  ];
+  List<Gender> _genders = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _rebuildGenderList();
+  }
+
+  @override
+  void didUpdateWidget(GenderSelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    setState(() {
+      _rebuildGenderList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,5 +58,20 @@ class _GenderSelectorState extends State<GenderSelector> {
         );
       }).toList(),
     );
+  }
+
+  void _rebuildGenderList() {
+    _genders = <Gender>[
+      Gender(
+        User.maleGender,
+        Image.asset('assets/images/man.png'),
+        widget._initialValue == User.maleGender,
+      ),
+      Gender(
+        User.femaleGender,
+        Image.asset('assets/images/woman.png'),
+        widget._initialValue == User.femaleGender,
+      ),
+    ];
   }
 }
