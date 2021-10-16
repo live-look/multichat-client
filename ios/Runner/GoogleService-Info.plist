@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>247040840814-duckn5tuk75oe0i0apcvmjt30u8acjb7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.247040840814-duckn5tuk75oe0i0apcvmjt30u8acjb7</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>247040840814-cqrt55i6fkjgm4rkurataiodb2ir2tfq.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDZhu6kS9TnMsbELlJtn-wjGc_BL5DNlXM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>247040840814</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>club.multichat.multichat</string>
+	<key>PROJECT_ID</key>
+	<string>multichat-c9773</string>
+	<key>STORAGE_BUCKET</key>
+	<string>multichat-c9773.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:247040840814:ios:5e0fc62cf0f817d419427f</string>
+</dict>
+</plist>
