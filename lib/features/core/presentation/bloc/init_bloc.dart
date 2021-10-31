@@ -5,7 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:multichat/features/core/data/sources/search_options_local_source.dart';
+import 'package:multichat/features/core/data/sources/settings_local_source.dart';
 import 'package:multichat/features/core/data/sources/users_local_source.dart';
+import 'package:multichat/features/core/entities/search_options.dart';
+import '../../entities/settings.dart';
 import '../../entities/user.dart';
 
 import 'init_event.dart';
@@ -58,9 +62,14 @@ class InitBloc extends Bloc<InitEvent, InitState> {
 
   Future<void> _initializeHive() async {
     await Hive.initFlutter();
+
     Hive.registerAdapter<User>(UserAdapter());
+    Hive.registerAdapter<Settings>(SettingsAdapter());
+    Hive.registerAdapter<SearchOptions>(SearchOptionsAdapter());
 
     await Hive.openBox<User>(UsersLocalSource.boxName);
+    await Hive.openBox<Settings>(SettingsLocalSource.boxName);
+    await Hive.openBox<SearchOptions>(SearchOptionsLocalSource.boxName);
   }
 
   @override

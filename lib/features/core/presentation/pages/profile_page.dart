@@ -17,13 +17,15 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => _userProfileBloc..add(const UserProfileLoadStarted()),
-      child: ProfileForm(onSave: (user) {
-        _userProfileBloc.add(
-          UserProfileUpdateStarted(user: user),
-        );
+      child: ProfileForm(
+        onSave: (user) {
+          _userProfileBloc.add(
+            UserProfileUpdateStarted(user: user),
+          );
 
-        AutoRouter.of(context).pop();
-      }),
+          AutoRouter.of(context).pop();
+        },
+      ),
     );
   }
 }

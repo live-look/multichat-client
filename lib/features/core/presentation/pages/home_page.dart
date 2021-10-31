@@ -1,48 +1,49 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:multichat/features/core/presentation/widgets/main_menu.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Multichat'),
-        actions: <Widget>[
-          PopupMenuButton(
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                child: Text('Мой аккаунт'),
-                onTap: () {
-                  AutoRouter.of(context).navigateNamed("/profile");
-                },
-              ),
-              PopupMenuItem(
-                child: Text('Параметры поиска'),
-                onTap: () {
-
-                },
-              ),
-              PopupMenuItem(
-                child: Text('Настройки'),
-                onTap: () {
-
-                },
-              ),
-              PopupMenuItem(
-                child: Text('Пользовательское соглашение'),
-                onTap: () {
-
-                },
-              ),
-            ],
-          ),
-        ],
+        actions: AppMenu.mainMenu(context),
       ),
       body: Center(
-        child: const Text('Home page'),
+        child: ListView(
+          children: ListTile.divideTiles(
+            context: context,
+            tiles: <Widget>[
+              ListTile(
+                leading: const Icon(CupertinoIcons.search),
+                title: const Text('Начать поиск'),
+                trailing: const Icon(CupertinoIcons.chevron_right),
+                onTap: () {
+                  AutoRouter.of(context).navigateNamed("/chats");
+                },
+              ),
+              ListTile(
+                leading: const Icon(CupertinoIcons.settings),
+                title: const Text('Настройки поиска'),
+                trailing: const Icon(CupertinoIcons.chevron_right),
+              ),
+              ListTile(
+                leading: const Icon(CupertinoIcons.chat_bubble),
+                title: const Text('Сохраненные диалоги'),
+                trailing: const Icon(CupertinoIcons.chevron_right),
+              ),
+            ],
+          ).toList(),
+        ),
       ),
     );
   }

@@ -7,7 +7,7 @@ class UsersRemoteSource {
 
   UsersRemoteSource()
       : channel = ClientChannel(
-          '192.168.1.45', // TODO: replace
+          '192.168.1.37', // TODO: replace
           port: 50053,
           options: const ChannelOptions(
             credentials: ChannelCredentials.insecure(),
