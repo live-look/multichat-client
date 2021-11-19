@@ -33,7 +33,7 @@ dependencies:
   get_it: ^7.2.0
   grpc: ^3.0.2
   protobuf: ^2.0.0
-  flutter_bloc: ^7.1.0
+  flutter_bloc: ^8.0.0
   hive: ^2.0.4
   hive_flutter: ^1.1.0
   path_provider: ^2.0.3
